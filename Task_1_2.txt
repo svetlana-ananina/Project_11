@@ -1,0 +1,22 @@
+Задания на работу с базой данных Яндекс Самокат
+
+Задание 1.
+Вывести список логинов курьеров с количеством их заказов в статусе «В доставке»
+
+SELECT c.login, COUNT(o."inDelivery" = true) 
+FROM "Couriers" AS c 
+LEFT JOIN "Orders" AS o ON c.id = o."courierId"
+GROUP BY c.login 
+ORDER BY c.login;
+
+Задание 2.
+Вывести все треки заказов и их статусы
+
+SELECT o.track, 
+		CASE 
+			WHEN o.finished = true THEN '2'
+			WHEN o.cancelled = true THEN '-1'
+			WHEN o."inDelivery" = true THEN '1' 
+			ELSE '0' 
+		END 
+FROM "Orders" AS o;
